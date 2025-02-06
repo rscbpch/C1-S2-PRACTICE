@@ -8,40 +8,40 @@
 <body>
     <div class="container">
         <div class="add-tasks">
-            <form onsubmit="event.preventDefault(); add();">
+            <form action="">
                 <label>Tasks:</label>
                 <input type="text" id="fill-task"><br><br>
                 <label>Priority:</label>
-                <select id="priority">
-                    <option value="1">High</option>
-                    <option value="0">Low</option>
+                <select>
+                    <option>High</option>
+                    <option>Low</option>
                 </select><br><br>
-                <button type="submit">Add task</button><br><br>
-                <button type="button" onclick="filterTasks(1)">Show only the important tasks</button><br><br>
-                <button type="button" onclick="filterTasks(0)">Show the tasks that are not important</button><br><br>
-                <button type="button" onclick="displayTasks(task)">Show all the tasks</button><br><br>
-            </form>
+                <button onclick="add()">Add task</button><br><br>
+                <button onclick="important">Show only the important tasks</button><br><br>
+                <button onclick="not-important">Show the tasks that are not important</button><br><br>
+                <button onclick="all">Show all the tasks</button><br><br>
+              </form>
         </div>
         <div id="tasks" class="tasks"></div>
     </div>
     <script>
         let task = [
-            { description: "Task 1", priority: 1 },
-            { description: "Task 2", priority: 0 },
-            { description: "Task 3", priority: 1 }
+            {description: "Task 1", priority: 1},
+            {description: "Task 2", priority: 0},
+            {description: "Task 3", priority: 1}
         ];
 
-        function displayTasks(taskList) {
+        function displayTasks(task) {
             let tasksContainer = document.getElementById("tasks");
-            let tasksHTML = "<div class='task-container'>";
-            taskList.forEach(element => {
-                let bgColor = element.priority === 1 ? 'red' : 'grey';
-                tasksHTML += `
-                    <div class="task-box" style="background-color: ${bgColor};">
-                        <p>${element.description}</p>
-                    </div>
-                `;
-            });
+            let tasksHTML = "<div class='taks-container'>";
+                task.forEach(element => {
+                    let bgColor = element.priority === 1 ? 'red' : 'grey';
+                    tasksHTML += `
+                        <div class="task-box" style="background-color: ${bgColor};">
+                            <p>${element.description}</p>
+                        </div>
+                    `;
+                });
             tasksHTML += "</div>";
             tasksContainer.innerHTML = tasksHTML;
         }
@@ -66,6 +66,7 @@
     </script>
     <style>
         .container {
+            /* padding: 0 400px; */
             display: flex;
             justify-content: space-between;
         }
@@ -74,8 +75,8 @@
             padding: 10px 0;
             text-align: center;
             color: white;
-            margin-bottom: 5px;
         }
+
     </style>
 </body>
 </html>
