@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task</title>
+</head>
+<body>
+    <div class="container">
+        <div class="add-tasks">
+            <form onsubmit="event.preventDefault(); add();">
+                <label>Tasks:</label>
+                <input type="text" id="fill-task"><br><br>
+                <label>Priority:</label>
+                <select id="priority">
+                    <option value="1">High</option>
+                    <option value="0">Low</option>
+                </select><br><br>
+                <button type="submit">Add task</button><br><br>
+                <button type="button" onclick="filterTasks(1)">Show only the important tasks</button><br><br>
+                <button type="button" onclick="filterTasks(0)">Show the tasks that are not important</button><br><br>
+                <button type="button" onclick="displayTasks(task)">Show all the tasks</button><br><br>
+            </form>
+        </div>
+        <div id="tasks" class="tasks"></div>
+    </div>
+    <script>
+        let task = [
+            { description: "Task 1", priority: 1 },
+            { description: "Task 2", priority: 0 },
+            { description: "Task 3", priority: 1 }
+        ];
+
+        function displayTasks(taskList) {
+            let tasksContainer = document.getElementById("tasks");
+            let tasksHTML = "<div class='task-container'>";
+            taskList.forEach(element => {
+                let bgColor = element.priority === 1 ? 'red' : 'grey';
+                tasksHTML += `
+                    <div class="task-box" style="background-color: ${bgColor};">
+                        <p>${element.description}</p>
+                    </div>
+                `;
+            });
+            tasksHTML += "</div>";
+            tasksContainer.innerHTML = tasksHTML;
+        }
+
+        function add() {
+            let taskInput = document.getElementById("fill-task").value.trim();
+            let priorityInput = document.getElementById("priority").value;
+
+            if (taskInput !== "") {
+                task.push({ description: taskInput, priority: parseInt(priorityInput) });
+                displayTasks(task);
+                document.getElementById("fill-task").value = "";
+            }
+        }
+
+        function filterTasks(priority) {
+            let filteredTasks = task.filter(t => t.priority === priority);
+            displayTasks(filteredTasks);
+        }
+
+        displayTasks(task);
+    </script>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .task-box {
+            width: 250px;
+            padding: 10px 0;
+            text-align: center;
+            color: white;
+            margin-bottom: 5px;
+        }
+    </style>
+</body>
+</html>
